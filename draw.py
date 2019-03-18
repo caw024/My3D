@@ -7,7 +7,18 @@ from matrix import *
   # height and depth dimensions.
   # ====================
 def add_box( points, x, y, z, width, height, depth ):
-    pass
+    add_edge(points, x, y, z, x + width, y, z)
+    add_edge(points, x, y, z, x, y + height, z)
+    add_edge(points, x, y, z, x, y, z-depth)
+    add_edge(points, x+width, y, z, x+width, y, z-depth)
+    add_edge(points, x+width, y, z, x+width, y+height, z)
+    add_edge(points, x, y+height, z, x+width, y+height, z)
+    add_edge(points, x, y+height, z, x, y+height, z-width)
+    add_edge(points, x, y, z-depth, x+width, y, z-depth)
+    add_edge(points, x, y, z-depth, x, y-depth, z-depth)
+    add_edge(points, x+width,y+height,z-depth,x+width,y+height,z)
+    add_edge(points, x+width,y+height,z-depth,x+width,y,z-width)
+    add_edge(points, x+width,y+height,z-depth,xh,y+height,z-width)
 
   # ====================
   # Generates all the points along the surface
@@ -16,7 +27,17 @@ def add_box( points, x, y, z, width, height, depth ):
   # Returns a matrix of those points
   # ====================
 def generate_sphere( points, cx, cy, cz, r, step ):
-    pass
+    newpoints = []
+    i = 1
+    while i <= step:
+        t = float(i)/step
+        spherecoor = [ [r*math.cos(t/(2*math.pi)) + cx,
+                        r*math.sin(t/(2*math.pi))*math.cos(45/(2*math.pi)) +cy,
+                        r*math.sin(t/(2*math.pi))*math.sin(45/(2*math.pi)) +cz,
+                        1] ]
+        t += step
+        i += 1
+    return spherecoor
 
   # ====================
   # adds all the points for a sphere with center 
@@ -25,7 +46,8 @@ def generate_sphere( points, cx, cy, cz, r, step ):
   # necessary points
   # ====================
 def add_sphere( points, cx, cy, cz, r, step ):
-    pass
+    
+    return generate_sphere(points,cx,cy,cz,r,step)
 
 
   # ====================
@@ -80,6 +102,7 @@ def add_curve( points, x0, y0, x1, y1, x2, y2, x3, y3, step, curve_type ):
         x0 = x
         y0 = y
         t+= step
+        i+=1
 
 
 def draw_lines( matrix, screen, color ):
