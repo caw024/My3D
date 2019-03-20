@@ -1,4 +1,5 @@
 #myscript
+clear
 torus
 50 50 0 15 50
 torus
